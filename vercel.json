@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/estimate.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/api/estimate",
+      "dest": "/api/estimate.py"
+    },
+    {
+      "src": "/api/estimate/(.*)",
+      "dest": "/api/estimate.py"
+    }
+  ],
+  "env": {
+    "PYTHON_VERSION": "3.10"
+  },
+  "buildCommand": "pip install -r requirements.txt",
+  "outputDirectory": "public",
+  "functions": {
+    "api/estimate.py": {
+      "maxDuration": 10,
+      "memory": 1024
+    }
+  }
+}
