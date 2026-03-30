@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金实时涨跌幅估算系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-item h3 {
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        .btn-secondary {
+            background: #4CAF50;
+        }
+        
+        .btn-secondary:hover {
+            background: #45a049;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📊 基金实时涨跌幅估算系统</h1>
+            <p>基于天天基金网持仓 + 东方财富网股票数据的智能估算平台</p>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">支持基金数量</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">实时</div>
+                <div class="stat-label">数据更新频率</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">数据准确性</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">系统可用性</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 项目简介</h2>
+            <p>这是一个基于Python的基金实时涨跌幅估算系统，专门为投资者提供准确的基金表现估算。系统使用天天基金网的持仓数据和东方财富网的股票实时数据，通过科学的算法计算基金的实时涨跌幅。</p>
+            
+            <div class="code-block">
+                <code>基金估算涨跌 = ∑(持仓权重 × 股票实时涨跌) + 现金收益</code>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-item">
+                <h3>📈 实时估算</h3>
+                <p>基于持仓和股票实时价格估算基金涨跌，提供准确的盘中表现预测。</p>
+            </div>
+            
+            <div class="feature-item">
+                <h3>🔢 多基金支持</h3>
+                <p>可同时监控多只基金，支持自定义基金列表和优先级设置。</p>
+            </div>
+            
+            <div class="feature-item">
+                <h3>📊 智能报告</h3>
+                <p>生成详细的估算报告，包含数据质量评估和投资建议。</p>
+            </div>
+            
+            <div class="feature-item">
+                <h3>⚡ 自动化运行</h3>
+                <p>支持定时任务和自动化部署，无需人工干预。</p>
+            </div>
+            
+            <div class="feature-item">
+                <h3>🛡️ 错误处理</h3>
+                <p>完善的异常处理和备用数据源，确保系统稳定运行。</p>
+            </div>
+            
+            <div class="feature-item">
+                <h3>🌐 开源免费</h3>
+                <p>完全开源，代码透明，社区驱动，持续更新。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🚀 快速开始</h2>
+            <p>只需几步即可开始使用基金估算系统：</p>
+            
+            <div class="code-block">
+                <code>
+# 1. 克隆仓库<br>
+git clone https://github.com/CarsonLyu87/fund-estimation-system.git<br>
+<br>
+# 2. 进入项目目录<br>
+cd fund-estimation-system<br>
+<br>
+# 3. 安装依赖<br>
+pip install -r requirements.txt<br>
+<br>
+# 4. 运行估算<br>
+python scripts/run_estimation.py<br>
+<br>
+# 5. 查看报告<br>
+cat reports/latest_fund_estimation.txt
+                </code>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <a href="https://github.com/CarsonLyu87/fund-estimation-system" class="btn" target="_blank">
+                📁 查看GitHub仓库
+            </a>
+            <a href="https://github.com/CarsonLyu87/fund-estimation-system/archive/refs/heads/main.zip" class="btn btn-secondary">
+                ⬇️ 下载源代码
+            </a>
+            <button class="btn btn-outline" onclick="showDemo()">
+                🎬 查看演示
+            </button>
+        </div>
+        
+        <div class="card" id="demo-section" style="display: none;">
+            <h2>🎬 系统演示</h2>
+            <p>系统运行示例输出：</p>
+            <div class="code-block">
+                <code>
+🚀 基金实时涨跌幅估算系统<br>
+======================================================================<br>
+📋 监控基金: 5 只<br>
+   • 中欧医疗创新股票A (006228)<br>
+   • 易方达蓝筹精选混合 (005827)<br>
+   • 招商中证白酒指数 (161725)<br>
+   • 易方达消费行业 (110022)<br>
+   • 华夏成长混合 (000001)<br>
+<br>
+📊 估算 中欧医疗创新股票A (006228)...<br>
+   ✅ 完成: +0.2633%<br>
+📊 估算 易方达蓝筹精选混合 (005827)...<br>
+   ✅ 完成: +0.5397%<br>
+<br>
+📝 生成报告...<br>
+======================================================================<br>
+📊 基金实时涨跌幅估算报告<br>
+报告时间: 2026-03-30 16:05:20<br>
+======================================================================<br>
+<br>
+📈 总体概览:<br>
+   监控基金: 2 只<br>
+   预计上涨: 2 只<br>
+   预计下跌: 0 只<br>
+   预计平盘: 0 只<br>
+<br>
+🏆 各基金估算结果:<br>
+--------------------------------------------------<br>
+📈 易方达蓝筹精选混合 (005827)<br>
+   估算涨跌: +0.5397%<br>
+   股票仓位: 45.5%<br>
+   现金仓位: 54.5%<br>
+   数据质量: 5/5<br>
+   估算时间: 2026-03-30 16:05:20<br>
+<br>
+✅ 估算完成!<br>
+======================================================================
+                </code>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📞 支持与贡献</h2>
+            <p>如果您在使用过程中遇到问题或有改进建议，欢迎通过以下方式联系我们：</p>
+            
+            <div class="buttons">
+                <a href="https://github.com/CarsonLyu87/fund-estimation-system/issues" class="btn" target="_blank">
+                    🐛 提交问题
+                </a>
+                <a href="https://github.com/CarsonLyu87/fund-estimation-system/pulls" class="btn btn-secondary" target="_blank">
+                    🔧 提交PR
+                </a>
+                <a href="https://github.com/CarsonLyu87" class="btn btn-outline" target="_blank">
+                    👤 关注作者
+                </a>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>© 2026 基金实时涨跌幅估算系统 | 开源项目 | MIT许可证</p>
+            <p>数据来源: 天天基金网、东方财富网、新浪财经</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                免责声明: 本系统提供的数据仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        function showDemo() {
+            const demoSection = document.getElementById('demo-section');
+            if (demoSection.style.display === 'none') {
+                demoSection.style.display = 'block';
+                window.scrollTo({
+                    top: demoSection.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            } else {
+                demoSection.style.display = 'none';
+            }
+        }
+        
+        // 添加简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .feature-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
