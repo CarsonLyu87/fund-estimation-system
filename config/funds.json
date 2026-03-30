@@ -1,0 +1,63 @@
+{
+  "funds": [
+    {
+      "code": "006228",
+      "name": "中欧医疗创新股票A",
+      "type": "医疗",
+      "priority": 1,
+      "description": "医疗健康主题基金，投资创新药、医疗器械等",
+      "max_holdings": 10
+    },
+    {
+      "code": "005827",
+      "name": "易方达蓝筹精选混合",
+      "type": "蓝筹",
+      "priority": 2,
+      "description": "蓝筹价值基金，投资各行业龙头企业",
+      "max_holdings": 10
+    },
+    {
+      "code": "161725",
+      "name": "招商中证白酒指数",
+      "type": "白酒",
+      "priority": 3,
+      "description": "白酒指数基金，跟踪中证白酒指数",
+      "max_holdings": 10
+    },
+    {
+      "code": "110022",
+      "name": "易方达消费行业",
+      "type": "消费",
+      "priority": 4,
+      "description": "消费主题基金，投资食品饮料、家电等",
+      "max_holdings": 10
+    },
+    {
+      "code": "000001",
+      "name": "华夏成长混合",
+      "type": "成长",
+      "priority": 5,
+      "description": "成长风格基金，投资高成长性公司",
+      "max_holdings": 10
+    }
+  ],
+  "settings": {
+    "data_sources": {
+      "fund_holdings": "tiantian",
+      "stock_realtime": "eastmoney",
+      "fallback": "sina"
+    },
+    "estimation": {
+      "cash_return_rate": 0.0,
+      "max_holdings_per_fund": 10,
+      "request_timeout": 10,
+      "retry_times": 3
+    },
+    "report": {
+      "format": "text",
+      "save_to_file": true,
+      "show_details": true,
+      "include_charts": false
+    }
+  }
+}
