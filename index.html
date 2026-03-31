@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金持仓数据查询 - Vercel Python函数测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #0070f3;
+            border-bottom: 2px solid #0070f3;
+            padding-bottom: 10px;
+        }
+        .container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input {
+            width: 200px;
+        }
+        button {
+            background: #0070f3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0051cc;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #e00;
+            background: #ffe6e6;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            color: #0a0;
+            background: #e6ffe6;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 基金持仓数据查询</h1>
+    
+    <div class="container">
+        <p>这是一个Vercel Python函数测试页面。使用AKShare获取基金持仓数据。</p>
+        
+        <div>
+            <label for="fundCode">基金代码:</label>
+            <input type="text" id="fundCode" value="005827" placeholder="例如: 005827">
+            <button onclick="fetchFundData()">查询持仓数据</button>
+        </div>
+        
+        <div id="result">
+            <h3>查询结果</h3>
+            <div id="data"></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h3>📋 测试说明</h3>
+        <p>这个页面测试Vercel Python函数的正确配置：</p>
+        <ul>
+            <li><strong>API端点</strong>: <code>/api/index.py</code> (Vercel官方Python函数入口)</li>
+            <li><strong>函数代码</strong>: 使用AKShare获取基金持仓数据</li>
+            <li><strong>依赖</strong>: requirements.txt包含akshare, pandas, requests</li>
+            <li><strong>前端</strong>: 纯HTML/JavaScript页面</li>
+        </ul>
+        
+        <h3>✅ 验证步骤</h3>
+        <ol>
+            <li>点击"查询持仓数据"按钮测试API</li>
+            <li>检查控制台是否有错误</li>
+            <li>验证数据是否正确返回</li>
+            <li>检查Vercel部署日志</li>
+        </ol>
+    </div>
+    
+    <script>
+        async function fetchFundData() {
+            const fundCode = document.getElementById('fundCode').value.trim();
+            const resultDiv = document.getElementById('result');
+            const dataDiv = document.getElementById('data');
+            
+            // 显示加载状态
+            resultDiv.style.display = 'block';
+            dataDiv.innerHTML = '<div class="loading">正在查询基金持仓数据...</div>';
+            
+            try {
+                // 调用Vercel Python函数
+                const response = await fetch(`/api/index.py?code=${fundCode}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // 显示成功结果
+                dataDiv.innerHTML = `
+                    <div class="success">
+                        ✅ 查询成功！基金: ${data.fund}，持仓数量: ${data.count}
+                    </div>
+                    <p><strong>基金名称:</strong> ${data.name}</p>
+                    <p><strong>更新时间:</strong> ${data.timestamp}</p>
+                    
+                    <h4>持仓详情 (前10条):</h4>
+                    ${data.holdings && data.holdings.length > 0 ? 
+                        `<table>
+                            <thead>
+                                <tr>
+                                    <th>股票代码</th>
+                                    <th>股票名称</th>
+                                    <th>持仓比例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.holdings.slice(0, 10).map(item => `
+                                    <tr>
+                                        <td>${item.symbol || 'N/A'}</td>
+                                        <td>${item.name || 'N/A'}</td>
+                                        <td>${item.proportion || 'N/A'}%</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>` 
+                        : '<p>暂无持仓数据</p>'
+                    }
+                `;
+                
+            } catch (error) {
+                // 显示错误信息
+                dataDiv.innerHTML = `
+                    <div class="error">
+                        ❌ 查询失败: ${error.message}
+                    </div>
+                    <p>可能的原因：</p>
+                    <ul>
+                        <li>Vercel Python函数未正确部署</li>
+                        <li>AKShare依赖未安装</li>
+                        <li>网络连接问题</li>
+                        <li>基金代码无效</li>
+                    </ul>
+                    <p>请检查浏览器控制台获取详细错误信息。</p>
+                `;
+                console.error('API调用错误:', error);
+            }
+        }
+        
+        // 页面加载时自动测试
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Vercel Python函数测试页面已加载');
+            console.log('API端点: /api/index.py');
+            console.log('测试基金代码: 005827 (易方达蓝筹精选混合)');
+        });
+    </script>
+</body>
+</html>

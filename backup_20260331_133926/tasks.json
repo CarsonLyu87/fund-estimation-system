@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "created_at": "2026-03-24T21:47:42.112542",
+  "last_updated": "2026-03-24T21:47:42.113673",
+  "tasks": [
+    {
+      "id": "task_001",
+      "title": "测试浏览器任务",
+      "description": "这是一个测试任务",
+      "session": "browser",
+      "project": "website",
+      "priority": "medium",
+      "status": "completed",
+      "created_at": "2026-03-24T21:47:42.113084",
+      "updated_at": "2026-03-24T21:47:42.113483",
+      "completed_at": "2026-03-24T21:47:42.113485",
+      "assigned_to": "browser",
+      "notes": [
+        {
+          "timestamp": "2026-03-24T21:47:42.113486",
+          "status_change": "pending → completed",
+          "notes": "测试完成"
+        }
+      ]
+    },
+    {
+      "id": "task_002",
+      "title": "测试微信任务",
+      "description": "另一个测试任务",
+      "session": "weixin",
+      "project": "fund_monitor",
+      "priority": "high",
+      "status": "in_progress",
+      "created_at": "2026-03-24T21:47:42.113299",
+      "updated_at": "2026-03-24T21:47:42.113668",
+      "completed_at": null,
+      "assigned_to": "weixin",
+      "notes": [
+        {
+          "timestamp": "2026-03-24T21:47:42.113670",
+          "status_change": "pending → in_progress",
+          "notes": "开始处理"
+        }
+      ]
+    }
+  ],
+  "projects": {},
+  "session_tasks": {
+    "browser": [
+      "task_001"
+    ],
+    "weixin": [
+      "task_002"
+    ]
+  }
+}

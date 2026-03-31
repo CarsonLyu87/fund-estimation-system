@@ -1,0 +1,32 @@
+{
+  "report_name": "每日美股前10大科技股报告",
+  "schedule_time": "09:00",
+  "timezone": "Asia/Shanghai",
+  "stocks_to_monitor": [
+    { "symbol": "AAPL", "name": "苹果", "category": "科技巨头" },
+    { "symbol": "MSFT", "name": "微软", "category": "科技巨头" },
+    { "symbol": "GOOGL", "name": "谷歌", "category": "科技巨头" },
+    { "symbol": "AMZN", "name": "亚马逊", "category": "电商云" },
+    { "symbol": "NVDA", "name": "英伟达", "category": "AI芯片" },
+    { "symbol": "META", "name": "Meta", "category": "社交广告" },
+    { "symbol": "TSLA", "name": "特斯拉", "category": "新能源汽车" },
+    { "symbol": "AVGO", "name": "博通", "category": "芯片" },
+    { "symbol": "ORCL", "name": "甲骨文", "category": "企业软件" },
+    { "symbol": "ADBE", "name": "Adobe", "category": "创意软件" }
+  ],
+  "report_sections": [
+    "市场概况",
+    "涨幅榜",
+    "跌幅榜", 
+    "板块分析",
+    "特别关注",
+    "今日展望"
+  ],
+  "data_sources": [
+    "腾讯财经API",
+    "备用: 新浪财经"
+  ],
+  "notification_channels": [
+    "微信"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "weixin",
+  "name": "微信个人号",
+  "description": "个人微信消息通道",
+  "enabled": true,
+  "config": {
+    "accountId": "YOUR_WECHAT_ACCOUNT_ID",
+    "token": "YOUR_ACCESS_TOKEN",
+    "endpoint": "https://api.openclaw.ai/v1/weixin",
+    "webhook": {
+      "url": "YOUR_WEBHOOK_URL",
+      "secret": "YOUR_WEBHOOK_SECRET"
+    }
+  }
+}
