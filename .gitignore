@@ -1,80 +1,54 @@
-# Python
+# 忽略所有子项目目录
+fund-estimation-system/
+fund-show-AKShare/
+fund-stock-dashboard-backup/
+fund-stock-dashboard-new/
+fund-stock-dashboard/
+fund-stock-show/
+investment_dashboard/
+website-project/
+
+# 忽略日志和报告文件
+fund_logs/
+gold_logs/
+reports/
+test_reports/
+daily_summaries/
+local_reports/
+
+# 忽略缓存文件
+*.cache
+*.tmp
+*.temp
+
+# 忽略配置文件
+*.json
+*.local
+.env
+
+# 忽略Python缓存
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
+*.pyc
+*.pyo
+*.pyd
+
+# 忽略Node.js模块
+node_modules/
+
+# 忽略构建产物
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+build/
+*.tar.gz
 
-# Virtual environments
-venv/
-env/
-ENV/
-env.bak/
-venv.bak/
+# 忽略系统文件
+.DS_Store
+Thumbs.db
 
-# IDE
+# 忽略IDE文件
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Logs
-logs/
-*.log
-
-# Cache
-.cache/
-.cache/
-
-# Reports (保留最新报告，但忽略历史报告)
-reports/fund_estimation_*.txt
-!reports/latest_fund_estimation.txt
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Test coverage
-.coverage
-.coverage.*
-.pytest_cache/
-htmlcov/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
+# 忽略OpenClaw内部目录
+.openclaw/
